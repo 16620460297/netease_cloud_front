@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!-- 初始只写第1帧，后续通过JS动态修改 -->
+    <link id="dynamic-favicon" rel="icon" type="image/x-icon" href="/zq_001.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>音乐播放器</title>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 定义一个数组，收集所有从 mao_001.ico 到 mao_242.ico 的路径
+        const frames = [];
+        for (let i = 1; i <= 17; i++) {
+            // 补足三位数字，如 1 -> '001'
+            const iconIndex = String(i).padStart(3, "0");
+            frames.push(`/zq_${iconIndex}.ico`);
+        }
+
+        let currentFrameIndex = 0;
+        const faviconLink = document.getElementById("dynamic-favicon");
+        const totalFrames = frames.length;
+        const frameInterval = 100; // 毫秒间隔，可根据需要调整
+
+        // 每隔 frameInterval 毫秒切换到下一帧
+        setInterval(() => {
+            currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
+            faviconLink.href = frames[currentFrameIndex];
+        }, frameInterval);
+    });
+</script>
+</html>
